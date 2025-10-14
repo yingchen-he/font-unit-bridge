@@ -1,0 +1,322 @@
+/* style.css
+
+/* ---------------------------------------------------- */
+/* 1. Global & Color Palette */
+/* ---------------------------------------------------- */
+:root {
+    /* Define a modern, clean color palette */
+    --color-primary: #34495e;             /* Dark Blue/Gray for structure/text */
+    --color-accent-decorative: #1abc9c;   /* Teal for highlights, hover, borders */
+    --color-accent-accessible: #13866f;   /* DARKER Teal for headings (PASS on text contrast) */
+    --color-background: #f8f9fa;          /* Very Light Gray */
+    --color-card: #ffffff;
+    --color-shadow: rgba(0, 0, 0, 0.08);
+}
+
+body {
+    font-family: 'Inter', sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--color-background);
+    color: var(--color-primary);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ---------------------------------------------------- */
+/* 2. Navigation */
+/* ---------------------------------------------------- */
+.navbar {
+    background-color: var(--color-primary);
+    padding: 0.75rem 1rem;
+    box-shadow: 0 4px 8px var(--color-shadow);
+}
+.navbar ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.navbar li {
+    margin: 0 10px;
+}
+.navbar a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+.navbar a:hover {
+    background-color: #4a6681;
+    color: white;
+}
+.navbar a.active {
+    /* Uses the LIGHT DECORATIVE accent for the background highlight */
+    background-color: var(--color-accent-decorative); 
+    color: var(--color-primary); /* Dark primary text on light decorative accent background (passes 4.5:1) */
+    font-weight: 600;
+}
+
+/* ---------------------------------------------------- */
+/* 3. Content Layout & Typography */
+/* ---------------------------------------------------- */
+.content-section {
+    padding: 2rem;
+    flex-grow: 1;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-bottom: 4rem;
+}
+.content-section.active {
+    display: flex;
+}
+
+.content-section h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    letter-spacing: -0.05rem;
+    font-weight: 800;
+    max-width: 800px;
+    width: 100%;
+    color: var(--color-primary); 
+    border-bottom: 3px solid var(--color-accent-decorative); 
+
+}
+.content-section h2 {
+    color: var(--color-accent-accessible);
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+
+}
+.content-section h3 {
+    color: var(--color-primary);
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+.content-section p {
+    line-height: 1.75;
+    margin-bottom: 1.25rem;
+    max-width: 800px;
+    width: 100%;
+}
+.content-section hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(52, 73, 94, 0.3), rgba(0, 0, 0, 0));
+    margin: 2rem 0;
+    width: 100%;
+    max-width: 800px;
+}
+.hanging-indent {
+  margin-left: 1.5em;      /* Indent the entire paragraph */
+  text-indent: -1.5em;     /* Pull the first line back */
+  line-height: 1.5;        /* Optional: improves readability */
+}
+
+
+/* ---------------------------------------------------- */
+/* 4. List (Bullet Point) Fix and Styling */
+/* ---------------------------------------------------- */
+.content-section ul {
+    list-style: disc;
+    margin-left: 20px;
+    padding-left: 15px;
+    margin-bottom: 1.5rem;
+    max-width: 800px;
+    width: 100%;
+}
+.content-section ol {
+    margin-left: 20px;
+    padding-left: 15px;
+    margin-bottom: 1.5rem;
+    max-width: 800px;
+    width: 100%;
+}
+.content-section li {
+    /* margin-bottom: 0.75rem; */
+    line-height: 1.5;
+}
+
+/* ---------------------------------------------------- */
+/* 5. Converter Layout & Component Enhancements */
+/* ---------------------------------------------------- */
+.main-converter-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1400px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.converter-component {
+    background-color: var(--color-card);
+    border: 1px solid #e9ecef;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    box-shadow: 0 10px 15px -3px var(--color-shadow);
+    transition: transform 0.3s ease;
+    flex: 1 1 300px;
+    min-width: 300px;
+}
+.converter-component:hover {
+    box-shadow: 0 12px 20px -5px rgba(26, 188, 156, 0.2); 
+}
+
+/* Specific adjustments for side-by-side on larger screens */
+@media (min-width: 768px) {
+    .unit-selection-component {
+        flex: 2 1 450px;
+    }
+    .settings-component {
+        flex: 1 1 350px;
+    }
+    .results-component {
+        flex: 1 1 100%;
+    }
+}
+
+.unit-group {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+.unit-group:last-child {
+    border-bottom: none;
+}
+
+/* ---------------------------------------------------- */
+/* 6. Form Element Styling (Inputs, Buttons, Checkboxes) */
+/* ---------------------------------------------------- */
+.converter-component label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0.25rem;
+}
+.converter-component input[type="number"],
+.converter-component input[type="text"],
+.converter-component select {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.converter-component input:focus,
+.converter-component select:focus {
+    border-color: var(--color-accent-decorative); 
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(26, 188, 156, 0.25); 
+}
+
+.converter-component button {
+    background-color: var(--color-accent-decorative); 
+    color: var(--color-primary);
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    width: 100%;
+}
+.converter-component button:hover {
+    background-color: #16a085; /* Darker version of decorative accent */
+    transform: translateY(-1px);
+}
+.unit-checkbox {
+    accent-color: var(--color-accent-decorative); 
+}
+
+/* ---------------------------------------------------- */
+/* 7. Results and Error Styling */
+/* ---------------------------------------------------- */
+#resultsContainer {
+    margin-top: 1rem;
+    padding: 1.5rem;
+    background-color: #f0f3f5;
+    border-radius: 0.5rem;
+    border: 1px solid #dee2e6;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.result-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.result-item:last-child {
+    border-bottom: none;
+}
+.result-item .unit-label {
+    font-weight: 500;
+    color: var(--color-primary);
+}
+.result-item .unit-value {
+    color: var(--color-accent-accessible); 
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+#errorArea {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #f8d7da;
+    border-radius: 0.375rem;
+    border: 1px solid #f5c6cb;
+    display: none;
+}
+#errorText {
+    font-size: 1rem;
+    color: #721c24;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* ---------------------------------------------------- */
+/* 8. Ballpark Table Styling */
+/* ---------------------------------------------------- */
+.ballpark-table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    background-color: var(--color-card);
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 4px 10px var(--color-shadow);
+}
+.ballpark-table th, .ballpark-table td {
+    border: 1px solid #e9ecef;
+    padding: 1rem;
+    text-align: left;
+}
+.ballpark-table th {
+    background-color: #f0f3f5;
+    color: var(--color-primary);
+    font-weight: 700;
+    border-bottom: 2px solid var(--color-accent-decorative); 
+}
+.ballpark-table tr:nth-child(even) {
+    background-color: #fcfcfc;
+}
+.ballpark-table tr:hover {
+    background-color: #f0f0f0;
+}

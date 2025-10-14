@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FontUnit Bridge</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+    <script>document.addEventListener("DOMContentLoaded", () => { renderMathInElement(document.body); });</script>
+
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <ul>
+            <li><a href="#converter" class="nav-link active" data-target="converter-page">Converter</a></li>
+            <li><a href="#instructions" class="nav-link" data-target="instructions-page">Instructions</a></li>
+            <li><a href="#ballpark" class="nav-link" data-target="ballpark-page">Estimates</a></li>
+            <li><a href="#about" class="nav-link" data-target="about-page">About</a></li>
+
+        </ul>
+    </nav>
+
+    <div id="converter-page" class="content-section active">
+        <h1>FontUnit Bridge</h1>
+
+        <div class="main-converter-layout">
+            <div class="converter-component unit-selection-component">
+                <h2 class="text-xl font-semibold mb-4 text-center">Select Units</h2>
+
+                <div class="unit-group">
+                    <h3 class="text-lg font-medium mb-2">Traditional Length Units</h3>
+                    <div class="flex flex-wrap gap-x-4 gap-y-2">
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" class="unit-checkbox" data-unit="mm" checked>
+                            <span>Millimeters (mm)</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" class="unit-checkbox" data-unit="cm">
+                            <span>Centimeters (cm)</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" class="unit-checkbox" data-unit="m">
+                            <span>Meters (m)</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" class="unit-checkbox" data-unit="in">
+                            <span>Inches (in)</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" class="unit-checkbox" data-unit="ft">
+                            <span>Feet (ft)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="unit-group mt-6">
+                    <h3 class="text-lg font-medium mb-2">Design Units</h3>
+                    <div class="flex flex-wrap gap-x-4 gap-y-2">
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" class="unit-checkbox" data-unit="pt" checked>
+                            <span>PostScript Points (pt)</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" class="unit-checkbox" data-unit="pc">
+                            <span>Picas (pc)</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" class="unit-checkbox" data-unit="px">
+                            <span>Screen Physical Pixels (px)</span>
+                        </label>
+
+                    </div>
+                </div>
+
+                <div class="unit-group mt-6">
+                    <h3 class="text-lg font-medium mb-2">Visual Angle & Acuity Units</h3>
+                    <div class="flex flex-wrap gap-x-4 gap-y-2">
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" class="unit-checkbox" data-unit="deg">
+                            <span>Degrees (deg)</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" class="unit-checkbox" data-unit="min">
+                            <span>Minutes (min)</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" class="unit-checkbox" data-unit="sec">
+                            <span>Seconds (sec)</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" class="unit-checkbox" data-unit="snellen">
+                            <span>Snellen (20/X)</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" class="unit-checkbox" data-unit="logmar">
+                            <span>LogMAR</span>
+                        </label>
+                        <label class="flex items-center space-x-2">
+                            <input type="checkbox" class="unit-checkbox" data-unit="decimal">
+                            <span>Decimal Acuity</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="converter-component settings-component">
+                <h2 class="text-xl font-semibold mb-4 text-center">Conversion Settings</h2>
+
+                <div class="mb-4">
+                    <label for="viewingDistanceInput" class="block text-sm font-medium text-gray-700">Viewing
+                        Distance:</label>
+                    <div class="flex space-x-2">
+                        <input type="number" id="viewingDistanceInput" class="flex-grow p-2 border rounded-md"
+                            value="400">
+                        <select id="viewingDistanceUnit" class="p-2 border rounded-md">
+                            <option value="mm">mm</option>
+                            <option value="cm">cm</option>
+                            <option value="in">inch</option>
+                            <option value="ft">feet</option>
+                            <option value="m">meter</option>
+                        </select>
+                    </div>
+                    <div class="mt-2">
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" id="estimateDistanceCheckbox" class="form-checkbox">
+                            <span class="ml-2 text-sm text-gray-600">Estimate</span>
+                        </label>
+                        <select id="distanceEstimateSelect" class="ml-2 p-1 border rounded-md text-sm hidden">
+                            <option value="near">Normal reading</option>
+                            <option value="intermediate">Intermediate-distance reading</option>
+                            <option value="distant">Distant reading</option>
+                            <option value="">Select Scenario</option>
+                            <option value="smartphone">Using smartphones/smartwatches</option>
+                            <option value="book">Reading (e)books/holding tablets</option>
+                            <option value="laptop">Using laptops</option>
+                            <option value="computer">Using desktops</option>
+                            <option value="TV">Watching TV</option>
+                            <option value="medication">Very close reading</option>
+                            <option value="car">Car display</option>
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="ppiInput" class="block text-sm font-medium text-gray-700">Pixels Per Inch (PPI):</label>
+                    <input type="number" id="ppiInput" class="w-full p-2 border rounded-md" value="96">
+                    <div class="mt-2">
+                        <label class="inline-flex items-center">
+                            <input type="checkbox" id="estimatePpiCheckbox" class="form-checkbox">
+                            <span class="ml-2 text-sm text-gray-600">Estimate</span>
+                        </label>
+                        <select id="ppiEstimateSelect" class="ml-2 p-1 border rounded-md text-sm hidden">
+                            <option value="">Select Scenario</option>
+                            <option value="logical">CSS pixel reference PPI</option>
+                            <option value="smartphone">Smartphones</option>
+                            <option value="tablet">Tablets</option>
+                            <option value="laptop">Laptops</option>
+                            <option value="monitor">Desktop monitor</option>
+                            <option value="watch">Wrist-worn device</option>
+                            <option value="TV">TV</option>
+                            <option value="e-reader">E-reader</option>
+                            <option value="car">Car display</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="converter-component results-component">
+                <h2 class="text-xl font-semibold mb-4 text-center">Conversion Results</h2>
+                <div id="resultsContainer" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <!-- Results and inputs will be dynamically inserted here by JavaScript -->
+                </div>
+                <div id="errorArea" class="mt-4">
+                    <p id="errorText" class="error text-red-600 text-sm"></p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="about-page" class="content-section">
+        <h1>About FontUnit Bridge</h1>
+        <div class="converter-form">
+            <p>The FontUnit Bridge is designed to 1) provides an easy conversion between font size units, and 2) offers
+                ballpark estimates for common usage scenarios when device information and viewing distance are unknown
+                or vague. Ultimately, this tool aims to enable researchers, practitioners, clinicians, and the public to
+                speak the same language regarding font size, fostering communication and collaboration.</p>
+
+
+            <h2>Example Use Case 1</h2>
+            <p>A researcher is conducting a literature review to summarize how font size affects reading speed. This
+                tool helps them quickly convert font sizes reported in different studies into a common unit and estimate
+                values when viewing distance or device information is not reported.</p>
+            <h2>Example Use Case 2</h2>
+            <p>A designer is helping a coffee shop create menus for the counter, tables, and mobile devices. They can
+                use the tool to calculate the font size for each viewing scenario (in pt, px, or mm), ensuring a
+                consistent visual angle. In addition, seeing font sizes in all these units simultaneously helps the
+                designer contextualize the measurements and address other practical constraints, such as device size and
+                resolution, and the dimensions and placement of the printed menus. </p>
+            <h2>Example Use Case 3</h2>
+            <p>A clinician is seeing a patient who has recently experienced a reduction in visual acuity. Based on the
+                patient’s updated acuity level, the clinician can use the tool to simulate various reading scenarios and
+                determine appropriate accommodations for each, such as moving closer or increasing font size to ensure
+                text legibility, or identifying the minimum magnification level when using assistive devices. </p>
+
+            <hr>
+            <p><em>Questions or feature requests? Please contact Yingchen He, yingchen_he@ncsu.edu. </em></p>
+            <p class="hanging-indent">
+                He, Y., &amp; Sutherland, N. (2025). FontUnit Bridge: Unifying the language of font size for
+                practical application.
+                <em>Proceedings of the Human Factors and Ergonomics Society Annual Meeting</em> (OnlineFirst).
+                <a href="https://doi.org/10.1177/10711813251371647">https://doi.org/10.1177/10711813251371647</a>
+            </p>
+        </div>
+    </div>
+
+    <div id="ballpark-page" class="content-section">
+        <h1>Ballpark Estimates</h1>
+        <div class="converter-form">
+            <p>Depending on the conversion, information about the device or viewing distance may be required. If these
+                values are not not available, or if users want to explore a range of scenarios, they can
+                select from a list of representative device categories and viewing situations for a ballpark estimate.
+                Below is the full list of the estimates:</p>
+
+            <h2>Viewing Distance:</h2>
+
+
+            <ul>
+                <li>Default (if nothing is selected): 40 cm</li>
+                <li>Using smartphones/smartwatches: 30 cm</li>
+                <li>Reading (e)books/holding tablets: 40 cm</li>
+                <li>Using a laptop: 60 cm</li>
+                <li>Using desktops: 70 cm</li>
+                <li>Watching TV: 2.5 m</li>
+                <li>Car display: 28 in (711 mm)</li>
+                <li>Very close reading: 20 cm</li>
+                <li>Normal reading: 40 cm</li>
+                <li>Intermediate-distance reading: 2 m</li>
+                <li>Distant reading: 5 m</li>
+
+            </ul>
+
+            <h2>Pixels Per Inch:</h2>
+            <ul>
+                <li>Default (if nothing is selected), and CSS reference pixel: 96 PPI</li>
+                <li>Smartphones: 450 PPI</li>
+                <li>Tablets: 250 PPI</li>
+                <li>Laptops: 200 PPI</li>
+                <li>Desktop monitors: 150 PPI</li>
+                <li>Wrist-worn devices: 350 PPI</li>
+                <li>TVs: 80 PPI</li>
+                <li>E-readers: 200 PPI</li>
+                <li>Car displays: 200 PPI</li>
+            </ul>
+
+        </div>
+    </div>
+
+    <div id="instructions-page" class="content-section">
+        <h1>Instructions</h1>
+        <div class="converter-form">
+            <h2>Using the Converter:</h2>
+            <ol>
+                <li><strong>Step 1: Select Units.</strong> Check the boxes next to the units you want to see conversions
+                    for. An input field will appear for each selected unit in the "Conversion Results" section.</li>
+                <li><strong>Step 2 (Optional)): Adjust Settings.</strong>
+                    <ol>
+                        <li><strong>1) Viewing Distance:</strong> Enter the distance from which the text/object will be
+                            viewed (only required if the conversion involves both visual angle units and non-angle
+                            units).
+                            Choose appropriate units (mm, cm, in, ft, m). Use the "Estimate" checkbox for common
+                            scenarios.</li>
+                        <li><strong>2) Pixels Per Inch (PPI):</strong> Enter the pixel density of the display or print
+                            (only required if the conversion involves screen-related units).
+                            Use the "Estimate" checkbox for common scenarios.</li>
+                    </ol>
+                </li>
+
+                <li><strong>Step 3: Enter a Value.</strong> Input a numerical value into any of the visible unit fields
+                    in the
+                    "Conversion Results" section. All other visible fields will update in real-time.
+                </li>
+
+            </ol>
+            <hr>
+            <h2>Understanding The Units:</h2>
+            <h3>Traditional Length Units:</h3>
+            <ul>
+                <li>Millimeters (mm), Centimeters (cm), Meters (m), Inches (in), Feet (ft).</li>
+                <li>In our calculation, 1 in = 25.4 mm.</li>
+            </ul>
+
+            <h3>Design Units:</h3>
+            <ul>
+                <li><strong>PostScript Points (pt):</strong> A traditional unit in typography, where 1 point = 1/72
+                    inch.</li>
+                <li><strong>Picas (pc):</strong> A typographic unit, where 1 pica = 12 points = 1/6 inch.</li>
+                <li><strong>Screen Physical Pixels (px):</strong> The smallest physical point on a display. Its
+                    physical size depends on the screen's PPI. (See special note below regarding CSS reference pixels.)
+                </li>
+            </ul>
+            <h3>Visual Angle & Acuity Units:</h3>
+            <p> These units describe how large something appears to the eye, considering viewing distance.</p>
+
+            <ul>
+                <li><strong>Degrees (deg), Minutes (min), Seconds (sec):</strong> Angular measurements. 1 degree
+                    = 60 minutes, 1 minute = 60 seconds.</li>
+                <li><strong>Snellen (20/X):</strong> A common measure of visual acuity. 20/20 is defined as
+                    "normal vision".</li>
+                <li><strong>LogMAR:</strong> Logarithm of the Minimum Angle of Resolution. A linear scale for
+                    visual acuity, often used in research. For 20/20 vision, the minimum angle of resolution is
+                    1 min of arc, and the corresponding logMAR is the logarithm of 1, which is 0. </li>
+                <li><strong>Decimal Acuity:</strong> A simple decimal representation of visual acuity, where 1.0
+                    is normal vision (20/20=1).</li>
+            </ul>
+
+            <hr>
+
+            <h2>Conversion Methods</h2>
+
+            <h3>Between Physical and Display Units:</h3>
+
+            <p>These conversions require the <strong>Pixel Per Inch ($PPI$)</strong> information. For example:</p>
+
+            <p>$ \text{Size (px)} = \text{Size (in)} \times \text{PPI} $</p>
+
+            <h3>Between Physical and Visual Angle Units:</h3>
+
+            <p>These conversions require the <strong>Viewing Distance ($D$)</strong> information, assuming the fixation
+                is at the center of the object. The calculation uses basic trigonometry. For example, the conversion
+                between a physical size ($PS$) and the angle ($\theta$) subtended at the eye is
+                given by the tangent function:</p>
+            $$PS = 2 \times D \times \tan\left(\frac{\theta}{2}\right)\text{, and}$$
+            $$\theta = 2 \times \tan^{-1}\!\left(\frac{PS}{2 \times D}\right) .$$
+
+            <p>Here, $\theta$ must be in radians, which can be converted from degrees: $\theta_{\text{rad}} =
+                \theta_{\text{deg}}
+                \times \pi/180$.</p>
+
+            <hr>
+
+            <h2>Special Notes:</h2>
+
+            <h3>CSS Reference Pixel vs. Device Pixel</h3>
+
+            <p>A device pixel (or physical pixel) is the smallest unit of a display, i.e. the actual dots that make up
+                the screen image. The size of a device pixel varies depending on the model. In contrast, a CSS pixel
+                (also called a reference pixel) is a logical unit used by browsers in CSS
+                for consistent sizing. It is defined as the size of a pixel on a "standard" device with a pixel density
+                of 96 PPI. The CSS pixel is used if the layout uses HTML/CSS rules.</p>
+            <p>In addition, text rendering can be influenced by antialiasing strategies, as well as the specific
+                software and operating system. These factors need to be taken into account if pixel-level precision is
+                required.
+            </p>
+
+            <h3>Additional Considerations Regarding Visual Acuity</h3>
+
+            <p>While the conversion formulas are straightforward, additional considerations arise when applying the
+                results to real-world scenarios. For example, does letter size refer to cap height (the distance from
+                the baseline to the top of capital letters), or x-height (the height of lowercase letter x)? Many acuity
+                charts use cap height, whereas x-height is more commonly used in research studies, which requires an
+                additional conversion.</p>
+            <p>
+                Also, visual acuity describes only the smallest discernible letter size, whereas
+                fluent reading at maximum speed requires larger text. Other factors such as
+                contrast, layout, or font type also affect reading experience, but they are not considered in this tool.
+            </p>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // JavaScript for navigation
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            function showPage(targetId) {
+                // Hide all content sections
+                contentSections.forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                // Show the target content section
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    targetSection.classList.add('active');
+
+                    // === START: KA-TEX MANUAL RENDER INITIALIZATION ===
+                    if (typeof renderMathInElement !== 'undefined') {
+                        renderMathInElement(document.body, {
+                            // Custom delimiters to ensure robustness
+                            delimiters: [
+                                { left: '$$', right: '$$', display: true },
+                                { left: '$', right: '$', display: false },
+                                // You can also include standard LaTeX \begin{...} if needed
+                            ],
+                            // Ignore elements that might contain dollar signs but are not math
+                            ignoredTags: ["script", "noscript", "style", "textarea"]
+                        });
+                    }
+                    // === END: KA-TEX MANUAL RENDER INITIALIZATION ===
+
+                }
+
+                // Update active class for navigation links
+                navLinks.forEach(link => {
+                    if (link.dataset.target === targetId) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                });
+            }
+
+
+            // Handle initial page load based on hash or default to converter
+            const initialHash = window.location.hash.substring(1);
+            if (initialHash) {
+                showPage(initialHash + '-page'); // Append '-page' to match section IDs
+            } else {
+                showPage('converter-page'); // Default to converter page
+            }
+
+            // Add click event listeners to navigation links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    event.preventDefault(); // Prevent default anchor link behavior
+                    const targetId = this.dataset.target;
+                    showPage(targetId);
+                    window.history.pushState(null, '', `#${targetId.replace('-page', '')}`); // Update URL hash
+                });
+            });
+
+        });
+    </script>
+</body>
+
+</html>
